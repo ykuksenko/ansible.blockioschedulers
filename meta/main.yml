@@ -1,0 +1,9 @@
+galaxy_info:
+  author: Yevgeniy Kuksenko
+  description: simple role to setup io schedulers
+  company:
+  license: GPLv3
+  min_ansible_version: 1.2
+  galaxy_tags:
+  - system
+dependencies: []

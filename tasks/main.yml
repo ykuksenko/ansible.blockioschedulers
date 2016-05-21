@@ -1,0 +1,18 @@
+---
+- name: setup deadline block schedulers for kvm host ssds
+  command: "/bin/echo 'deadline' > /sys/block/{{ item }}/queue/scheduler"
+  with_dict: "{{ ansible_devices }}"
+  when: >
+        ansible_virtualization_type == 'kvm'
+    and ansible_virtualization_role == 'host'
+    and       item.value.rotational == '0'
+    and   item.value.scheduler_mode != 'deadline'
+
+- name: setup noop block schedulers for kvm guests
+  command: "/bin/echo 'noop' > /sys/block/{{ item }}/queue/scheduler"
+  with_dict: "{{ ansible_devices }}"
+  when: >
+        ansible_virtualization_type == 'kvm'
+    and ansible_virtualization_role == 'guest'
+    and       item.value.rotational == '0'
+    and   item.value.scheduler_mode != 'noop'
